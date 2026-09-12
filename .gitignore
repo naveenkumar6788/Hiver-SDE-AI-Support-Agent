@@ -1,46 +1,43 @@
-# Environment and secrets
-.env
-.env.local
-.env.*.local
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*.pyo
+*$py.class
+*.so
 
 # Virtual environment
 venv/
+.venv/
 env/
 ENV/
-.venv/
 
-# Python bytecode and caches
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
+# Testing and coverage
 .pytest_cache/
 .coverage
 htmlcov/
 .tox/
 .nox/
 
-# Datasets (large raw and processed data)
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Large local datasets and archives
 data/raw/
 data/processed/
 *.zip
 *.tar.gz
 *.tgz
 
-# Build and packaging
-build/
-dist/
-*.egg-info/
-.eggs/
-
-# Editor and OS artifacts
+# OS and editor artifacts
+.DS_Store
+Thumbs.db
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-.DS_Store
-Thumbs.db
 
 # Temporary and log files
 *.tmp
