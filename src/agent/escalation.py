@@ -111,7 +111,7 @@ def is_sensitive_transaction(text: str) -> Tuple[bool, str]:
     patterns = [
         (r"\b(stolen (device|phone|iphone|ipad|mac)|lost (my )?phone.*stolen)\b", "reported stolen device"),
         (r"\b(activation lock bypass|bypass (icloud|activation lock))\b", "device ownership / activation lock"),
-        (r"\b(swollen battery|smoke|smoking|spark(ing)?|burn(ing|t)?|fire hazard|exploded)\b", "hardware safety hazard"),
+        (r"\b(swollen\s+battery|(battery|phone|iphone)\s+(is\s+|was\s+)?(swollen|swelling|bulging)|(battery|phone|iphone)\s+(is\s+|was\s+)?(getting\s+hot|overheating)|battery\s+(is\s+|was\s+)?(leaking|punctured)|smoke\s+from\s+(the\s+)?(battery|phone|iphone)|(battery|phone|iphone)\s+(is\s+|was\s+)?smoking|smoking\s+iphone|smoke|smoking|spark(ing)?|burn(ing|t)?|battery\s+(exploded|explosion)|fire\s+hazard|exploded)\b", "hardware safety hazard"),
         (r"\b(identity verification for recovery|security-sensitive changes)\b", "sensitive security recovery")
     ]
     for pat, desc in patterns:

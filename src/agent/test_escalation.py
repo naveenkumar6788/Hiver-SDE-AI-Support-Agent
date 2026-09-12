@@ -378,13 +378,25 @@ TEST_CASES = [
         "evidence_supported": True,
         "safe_to_answer": True,
         "response_type": "troubleshooting"
+    },
+    {
+        "id": 28,
+        "query": "My battery is swollen and getting hot",
+        "expected_decision": "ESCALATE",
+        "expected_reason_code": "sensitive_transaction",
+        "intent": "battery_charging",
+        "intent_confidence": 0.95,
+        "evidence_used": False,
+        "evidence_supported": False,
+        "safe_to_answer": False,
+        "response_type": "escalation"
     }
 ]
 
 
 def run_unit_tests():
     print("=" * 80)
-    print("ESCALATION POLICY UNIT TEST SUITE (27 Tests)")
+    print("ESCALATION POLICY UNIT TEST SUITE (28 Tests)")
     print("=" * 80)
 
     records = []

@@ -917,7 +917,7 @@ def check_sensitive_topic(text: str) -> Tuple[bool, str]:
     hazard_patterns = [
         (r"\b(stolen (device|phone|iphone|ipad|mac)|lost (my )?phone.*stolen|my (phone|iphone) was stolen)\b", "device_theft"),
         (r"\b(activation lock bypass|bypass (icloud|activation lock))\b", "device_ownership"),
-        (r"\b(swollen battery|battery (smoking|swelling|exploded)|smoking iphone|fire hazard)\b", "hardware_hazard"),
+        (r"\b(swollen\s+battery|(battery|phone|iphone)\s+(is\s+|was\s+)?(swollen|swelling|bulging)|(battery|phone|iphone)\s+(is\s+|was\s+)?(getting\s+hot|overheating)|battery\s+(is\s+|was\s+)?(leaking|punctured)|smoke\s+from\s+(the\s+)?(battery|phone|iphone)|(battery|phone|iphone)\s+(is\s+|was\s+)?smoking|smoking\s+iphone|battery\s+(exploded|explosion)|fire\s+hazard)\b", "hardware_hazard"),
     ]
 
     for pat, reason in hazard_patterns:
@@ -2339,12 +2339,22 @@ def build_grounded_reply(
     )
 
     if sensitive:
+        if sensitive_reason == "hardware_hazard":
+            safety_reply = (
+                "For your safety, please stop using the device immediately, "
+                "avoid charging or plugging it in, and contact official Apple Support "
+                "or visit an authorized service provider for immediate hardware assistance."
+            )
+        else:
+            safety_reply = (
+                "This may involve account security or sensitive "
+                "information. Please contact official Apple Support "
+                "directly so a specialist can assist you."
+            )
 
         return {
             "reply":
-                "This may involve account security or sensitive "
-                "information. Please contact official Apple Support "
-                "directly so a specialist can assist you.",
+                safety_reply,
 
             "response_type":
                 "escalation",

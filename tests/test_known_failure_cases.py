@@ -489,3 +489,44 @@ class TestNamedAppClarification:
             f"Expected clarification not to ask 'which app' when app is named, got: {reply}"
         )
         assert "error" in reply.lower() or "occur" in reply.lower() or "use the app" in reply.lower()
+
+
+# ---------------------------------------------------------------------------
+# Test 17: Hardware safety hazard (swollen / hot battery) must escalate
+# ---------------------------------------------------------------------------
+class TestHardwareSafetyHazardEscalation:
+    def test_hardware_safety_variants_are_sensitive(self):
+        """Hardware safety hazards must be flagged as sensitive hardware_hazard."""
+        hazard_queries = [
+            "My battery is swollen and getting hot.",
+            "swollen battery",
+            "battery is swollen",
+            "battery was swollen",
+            "battery swelling",
+            "battery bulging",
+            "battery is bulging",
+            "battery was bulging",
+            "battery getting hot",
+            "battery is getting hot",
+            "battery overheating",
+            "phone overheating",
+            "iphone overheating",
+            "phone is overheating",
+            "iphone is overheating",
+            "battery leaking",
+            "battery is leaking",
+            "battery punctured",
+            "battery is punctured",
+            "smoke from battery",
+            "smoke from the battery",
+            "smoke from phone",
+            "smoke from the phone",
+            "battery smoking",
+            "battery exploded",
+            "battery explosion",
+            "fire hazard",
+        ]
+        for query in hazard_queries:
+            is_sensitive, topic = check_sensitive_topic(query)
+            assert is_sensitive, f"Expected {query} to be flagged as sensitive, got: {topic}"
+            assert topic == "hardware_hazard", f"Expected topic 'hardware_hazard' for {query}, got: {topic}"
