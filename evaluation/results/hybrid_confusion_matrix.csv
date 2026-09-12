@@ -1,0 +1,13 @@
+,app_problems,app_store_downloads,apple_id_icloud,apple_music_itunes,audio_speaker,battery_charging,calls_cellular,device_hardware,ios_software_update,other_unclear,screen_display,wifi_connectivity
+app_problems,0,0,0,0,0,0,0,1,0,9,0,2
+app_store_downloads,0,1,0,0,0,0,0,0,0,1,0,0
+apple_id_icloud,0,1,4,1,1,0,0,0,0,9,0,0
+apple_music_itunes,0,0,0,8,0,0,0,0,0,0,0,0
+audio_speaker,0,0,0,1,9,0,0,0,0,1,0,0
+battery_charging,0,0,0,0,0,7,0,0,0,4,0,0
+calls_cellular,0,0,0,0,0,0,2,0,0,7,0,0
+device_hardware,0,0,0,0,0,2,0,4,0,5,0,0
+ios_software_update,0,0,0,1,1,2,0,0,11,20,1,0
+other_unclear,0,0,0,2,0,0,0,0,0,26,0,0
+screen_display,0,0,0,0,0,0,0,0,3,4,2,0
+wifi_connectivity,0,0,0,0,0,0,0,0,0,3,0,4

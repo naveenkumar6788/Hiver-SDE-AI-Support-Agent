@@ -1,0 +1,8 @@
+criterion,mean_score,dist_1,dist_2,dist_3,dist_4,dist_5
+correctness,2.52,15,12,9,10,4
+groundedness,3.88,3,7,7,9,24
+relevance,2.74,13,10,9,13,5
+completeness,2.16,18,12,16,2,2
+tone,3.86,0,0,10,37,3
+unsupported_claims,4.46,0,0,7,13,30
+overall,3.27,0,0,0,0,0

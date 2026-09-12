@@ -1,0 +1,28 @@
+test_id,query,expected_decision,expected_reason_code,actual_decision,actual_reason_code,risk_level,confidence,reason,passed
+1,My Apple account was hacked,ESCALATE,account_security,ESCALATE,account_security,high,1.0,Account security concern: account hacking detected,True
+2,Someone accessed my account,ESCALATE,account_security,ESCALATE,account_security,high,1.0,Account security concern: unauthorized account access,True
+3,I was charged twice,ESCALATE,payment_billing,ESCALATE,payment_billing,high,1.0,Financial / billing matter: duplicate or incorrect charge,True
+4,I want a refund,ESCALATE,payment_billing,ESCALATE,payment_billing,high,1.0,Financial / billing matter: refund request,True
+5,Someone used my card,ESCALATE,payment_billing,ESCALATE,payment_billing,high,1.0,Financial / billing matter: payment card compromise,True
+6,My iCloud account is locked,ESCALATE,account_access,ESCALATE,account_access,high,0.95,Account access lockout: locked or disabled account,True
+7,I cannot access my account,ESCALATE,account_access,ESCALATE,account_access,high,0.95,Account access lockout: unable to access account,True
+8,I want my personal data deleted,ESCALATE,privacy_personal_data,ESCALATE,privacy_personal_data,high,1.0,Privacy or personal data request: personal data deletion or export request,True
+9,I will take legal action,ESCALATE,legal_or_policy,ESCALATE,legal_or_policy,high,1.0,Legal or regulatory inquiry: legal action notice,True
+10,My account was compromised,ESCALATE,account_security,ESCALATE,account_security,high,1.0,Account security concern: suspicious activity or compromise,True
+11,My iPhone battery drains quickly,AUTO_HANDLE,routine_supported_issue,AUTO_HANDLE,routine_supported_issue,low,0.95,Routine technical issue with verified safe evidence support (battery_charging),True
+12,I cannot connect to WiFi,AUTO_HANDLE,routine_supported_issue,AUTO_HANDLE,routine_supported_issue,low,0.95,Routine technical issue with verified safe evidence support (wifi_connectivity),True
+13,My iPhone speaker is not working,AUTO_HANDLE,routine_supported_issue,AUTO_HANDLE,routine_supported_issue,low,0.95,Routine technical issue with verified safe evidence support (audio_speaker),True
+14,My screen is black,AUTO_HANDLE,routine_supported_issue,AUTO_HANDLE,routine_supported_issue,low,0.95,Routine technical issue with verified safe evidence support (screen_display),True
+15,I cannot download an app from the App Store,AUTO_HANDLE,routine_supported_issue,AUTO_HANDLE,routine_supported_issue,low,0.95,Routine technical issue with verified safe evidence support (app_store_downloads),True
+16,My iPhone camera is not working,AUTO_HANDLE,routine_supported_issue,AUTO_HANDLE,routine_supported_issue,low,0.95,Routine technical issue with verified safe evidence support (device_hardware),True
+17,My iPhone is stuck on the Apple logo,AUTO_HANDLE,routine_supported_issue,AUTO_HANDLE,routine_supported_issue,low,0.95,Routine technical issue with verified safe evidence support (device_hardware),True
+18,My SIM card is not working,AUTO_HANDLE,routine_supported_issue,AUTO_HANDLE,routine_supported_issue,low,0.95,Routine technical issue with verified safe evidence support (calls_cellular),True
+19,My phone is locked on the Apple logo,AUTO_HANDLE,routine_supported_issue,AUTO_HANDLE,routine_supported_issue,low,0.95,Routine technical issue with verified safe evidence support (device_hardware),True
+20,My account was hacked and I cannot log in,ESCALATE,account_security,ESCALATE,account_security,high,1.0,Account security concern: account hacking detected,True
+21,My WiFi connection drops frequently,ESCALATE,low_intent_confidence,ESCALATE,low_intent_confidence,medium,0.6,Intent confidence (0.40) below threshold (0.60),True
+22,My battery is draining fast,ESCALATE,insufficient_evidence,ESCALATE,insufficient_evidence,medium,0.9,Conservative safety fallback: insufficient evidence (evidence not usable),True
+23,My battery is draining fast,ESCALATE,unsafe_evidence,ESCALATE,unsafe_evidence,medium,0.9,Retrieved evidence rejected by safety gate: resolution_divergence: battery query with bluetooth/wifi resolution,True
+24,What is this?,ESCALATE,unclear_issue,ESCALATE,unclear_issue,medium,0.85,Customer request is ambiguous without substantive problem description: vague customer message: 'what is this',True
+25,Speaker is broken,ESCALATE,insufficient_evidence,ESCALATE,insufficient_evidence,medium,0.9,Conservative safety fallback: insufficient evidence (evidence not usable),True
+26,Can you fix my Wi-Fi?,ESCALATE,unsupported_response,ESCALATE,unsupported_response,high,1.0,Generated reply contains ungrounded or unsupported claims: ['unsupported refund promise'],True
+27,My phone battery is swollen and smoking,ESCALATE,sensitive_transaction,ESCALATE,sensitive_transaction,high,1.0,Sensitive transaction / hardware safety hazard: hardware safety hazard,True

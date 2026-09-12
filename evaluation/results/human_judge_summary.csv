@@ -1,0 +1,8 @@
+dimension,sample_size,spearman_correlation,exact_agreement,within_1_point_agreement,status
+overall,0,N/A,N/A,N/A,NOT_YET_VERIFIED
+correctness,0,N/A,N/A,N/A,NOT_YET_VERIFIED
+groundedness,0,N/A,N/A,N/A,NOT_YET_VERIFIED
+relevance,0,N/A,N/A,N/A,NOT_YET_VERIFIED
+completeness,0,N/A,N/A,N/A,NOT_YET_VERIFIED
+tone,0,N/A,N/A,N/A,NOT_YET_VERIFIED
+unsupported_claims,0,N/A,N/A,N/A,NOT_YET_VERIFIED

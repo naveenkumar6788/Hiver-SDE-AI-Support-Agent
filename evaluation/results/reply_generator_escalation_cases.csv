@@ -1,0 +1,4 @@
+index,tweet_id,conversation_id,customer_message,gold_intent,predicted_intent,reason,response_type
+39,40519,apple_063145,@AppleSupport hi so I got an email my account was locked. But I’m pretty sure it was a fake.,apple_id_icloud,apple_id_icloud,account_security,escalation
+118,2804326,apple_020374,Dear @115858 what the shit? My account gets hacked and you give me a run around? #bullshit,apple_id_icloud,apple_id_icloud,account_security,escalation
+120,249333,apple_015216,"This might sound like an ignorant question, but how does one sign up for an iTunes account in Uganda without a credit card? Help! #uot #uganda @115858",apple_id_icloud,apple_id_icloud,payment_billing,escalation

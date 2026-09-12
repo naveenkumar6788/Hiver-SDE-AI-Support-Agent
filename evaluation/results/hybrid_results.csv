@@ -1,0 +1,5 @@
+model,accuracy,macro_f1,weighted_f1
+Majority Baseline,0.225,0.0315,0.0827
+TF-IDF + Logistic Regression,0.3877,0.3242,0.3737
+Hybrid Classifier,0.4875,0.4546,0.4489
+Improvement (Hybrid - TF-IDF),0.0998,0.1304,0.0752

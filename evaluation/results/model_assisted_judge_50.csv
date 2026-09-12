@@ -1,0 +1,51 @@
+evaluation_id,model_correctness,model_groundedness,model_relevance,model_completeness,model_tone,model_unsupported_claims,model_overall,model_reason
+eval_01,1,4,1,1,4,5,2.67,Problem mismatch: Customer inquired about password settings for App Store downloads; reply erroneously troubleshoots App Store network errors.
+eval_02,1,3,1,1,3,5,2.33,Truncated reply with missing URL and inappropriate iOS 11.1.1 update advice for a query about deleting pre-installed apps.
+eval_03,3,5,2,2,4,5,3.5,"Safe diagnostic fallback: Wi-Fi question is polite and grounded, but customer already explained the specific MMS conflict."
+eval_04,4,4,4,4,4,5,4.17,Appropriate diagnostic response: Customer gave a vague complaint about an unspecified bug; reply requests notification details and iOS version.
+eval_05,3,4,3,3,4,5,3.67,"Reasonable diagnostic clarification asking for iOS version and device model, though lacks specific guidance on third-party audio ducking."
+eval_06,1,4,1,1,4,5,2.67,Problem mismatch: Customer joked about downgrading iOS; reply irrelevantly offered an article on Reachability accessibility.
+eval_07,3,5,3,3,4,5,3.83,Safe diagnostic clarification asking for device model and iOS version for an accessory compatibility alert.
+eval_08,2,4,3,2,4,5,3.33,"Relevant battery intent and empathetic tone, but omitted link leaves the troubleshooting steps incomplete."
+eval_09,3,4,3,3,4,5,3.67,"Partially helpful diagnostic question, though customer had already specified the terms and conditions prompt."
+eval_10,5,5,5,4,5,5,4.83,"Directly relevant and actionable diagnostic question asking whether audio muffling occurs on calls, media, or both."
+eval_11,4,5,3,3,4,5,4.0,Safe diagnostic clarification requesting device model and iOS version for unexpected battery drain.
+eval_12,4,4,4,4,4,5,4.17,Correctly explains the iOS 11 Control Center Wi-Fi disconnect behavior and directs user to Settings for complete disabling.
+eval_13,3,5,3,3,4,5,3.83,Safe diagnostic fallback asking for device model and iOS version for a missing lock screen clock glitch.
+eval_14,5,4,5,4,5,5,4.67,Highly accurate and directly relevant solution identifying iOS 11.1.1 autocorrect bug fix with backup advisory.
+eval_15,2,4,2,2,3,5,3.0,"Problem mismatch: Customer lost photos; reply asks about deleting pictures, though iCloud Photo question is partially relevant."
+eval_16,1,3,1,1,3,5,2.33,Empty article reference with no diagnostic questions fails to address subway popup.
+eval_17,1,3,2,1,3,5,2.5,Problem mismatch: Customer reported music stopping during app refresh; reply mistakenly asked about music deletion.
+eval_18,2,4,2,2,4,5,3.17,Weak diagnostic relevance: Inquiring about country of residence does not assist with post-update device sluggishness.
+eval_19,1,5,1,1,3,5,2.67,Intent/problem mismatch: Customer reported alarm clock failure; fallback template erroneously asked cellular/call questions.
+eval_20,4,4,4,4,4,5,4.17,Relevant diagnostic questions checking network connectivity (Wi-Fi vs cellular) and iOS version for Siri high-quality voice assets.
+eval_21,5,5,5,4,5,5,4.83,Directly relevant and accurate first-line troubleshooting step (force restart) for an unresponsive touchscreen.
+eval_22,2,3,3,2,4,5,3.17,"Correct topic (App Store connection), but missing URL leaves the troubleshooting steps omitted."
+eval_23,5,5,5,5,5,5,5.0,"Actionable, accurate, and completely grounded battery troubleshooting step directing customer to battery usage by app."
+eval_24,1,4,1,1,2,5,2.33,Severe retrieval mismatch: Customer on iOS experiencing music pause; reply irrelevantly recommended installing Apple Music for Android.
+eval_25,4,5,4,3,4,5,4.17,Pertinent diagnostic clarification asking whether customer intends to use a SIM from a different carrier.
+eval_26,1,4,1,1,3,5,2.5,Substantial problem mismatch: Suggests software force-restart for a broken headphone plug physically lodged in device.
+eval_27,2,4,2,2,4,5,3.17,Problem mismatch: Suggests post-update battery life settings optimization for a completely drained device that will not charge.
+eval_28,3,4,3,2,4,5,3.5,"Partially relevant account recovery guidance regarding wait times, but omits the website error issue and lacks URL."
+eval_29,1,3,1,1,3,5,2.33,Escalation failure: Inquiry regarding suspected phishing email was answered with instructions to disable iCloud.
+eval_30,2,3,3,2,4,5,3.17,"Empathetic customer service tone, but guidance sentence was cut off in raw dataset without the photo web URL."
+eval_31,3,3,4,2,3,5,3.33,"Identifies that software update resolves the autocorrect issue, but missing link leaves customer without instructions."
+eval_32,1,3,2,1,3,5,2.5,Customer query was underspecified; reply provided an empty article reference without diagnostic questions.
+eval_33,1,5,1,1,3,5,2.67,Fallback template mismatch: Posed cellular/connectivity diagnostics for a device battery shutdown problem.
+eval_34,5,5,5,5,5,5,5.0,"Directly relevant, safe, and actionable first-step troubleshooting (Airplane Mode toggle and restart) for cellular drops."
+eval_35,4,5,4,3,4,5,4.17,Appropriate diagnostic clarification requesting iOS version and device model for screen flickering.
+eval_36,5,5,5,5,5,5,5.0,Exemplary diagnostic troubleshooting: Isolates which physical microphone is faulty by comparing Speakerphone vs Siri.
+eval_37,5,5,5,5,5,5,5.0,Accurate and directly applicable troubleshooting step (forget device and re-pair) for car Bluetooth connectivity issues.
+eval_38,5,5,5,5,5,5,5.0,Standard Apple-certified procedure for unpowered devices: 1-hour charging followed by force restart.
+eval_39,5,5,5,4,5,5,4.83,Accurate and secure guidance directing customer to iforgot.apple.com to initiate two-factor account recovery.
+eval_40,5,5,5,4,5,5,4.83,Accurate troubleshooting recommendation (Reset Network Settings) for persistent post-update Wi-Fi connection issues.
+eval_41,5,5,5,5,5,5,5.0,"Comprehensive, accurate 3-step troubleshooting sequence (force close, check App Store updates, device restart) for crashing apps."
+eval_42,5,5,5,5,5,5,5.0,Directly resolves root cause: Informs user to empty the 'Recently Deleted' album to free physical storage.
+eval_43,3,5,3,3,4,5,3.83,Safe diagnostic fallback requesting device model and iOS version for missing notification sounds.
+eval_44,5,5,5,4,5,5,4.83,Appropriate hardware charging safety guidance inquiring about official charging accessories and load management.
+eval_45,4,5,4,3,4,5,4.17,Safe diagnostic clarification narrowing down whether the crashing is system-wide or isolated to specific apps.
+eval_46,2,4,2,2,4,5,3.17,Problem mismatch: Suggests battery life version checking for a device that fails to charge physically.
+eval_47,2,3,2,2,4,5,3.0,Inverted problem match: Provided article for 'Hey Siri doesn't work' when user experienced false/accidental Siri activation; omitted URL.
+eval_48,1,4,1,1,3,5,2.5,Substantial problem mismatch: Addressed Touch ID purchase toggles instead of two-factor Apple ID verification code failure.
+eval_49,4,5,4,3,4,5,4.17,Safe diagnostic fallback confirming battery drain symptoms for post-update degradation.
+eval_50,3,5,3,3,4,5,3.83,"Diagnostic question asks which app is affected, but provided English text for a Spanish query without language routing."

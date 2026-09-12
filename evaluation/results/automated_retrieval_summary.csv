@@ -1,0 +1,2 @@
+queries_evaluated,top_k,precision_at_1,precision_at_3,precision_at_5,mrr,ndcg_at_5,average_similarity,total_strongly_relevant,total_somewhat_relevant,total_irrelevant
+30,5,1.0,1.0,1.0,1.0,1.0,0.27597734011342256,38,112,0

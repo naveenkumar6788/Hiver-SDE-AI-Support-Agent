@@ -1,0 +1,17 @@
+test_type,query,predicted_intent,rejection_reason,candidate_snippet
+core_target,My screen is completely black,screen_display,response_domain_mismatch: unrelated_domains,None
+adversarial,My battery drains quickly,battery_charging,response_domain_mismatch: resolution_divergence,@12345 In iOS 11 the Bluetooth and Wi-Fi controls in Control Center will disconnect. 
+adversarial,My screen is black,screen_display,no_actionable_guidance,@12345 We recently released iOS 11.1.1 which contains a fix for autocorrect and lette
+adversarial,My SIM is not working,calls_cellular,issue_mismatch: resolution_divergence,@12345 If your iPhone won't power on try these steps to restore in recovery mode.
+adversarial,YouTube keeps crashing,app_problems,application_mismatch,@12345 Please delete and reinstall the Apple Music app to fix crashes.
+adversarial,My iCloud account is locked,apple_id_icloud,issue_mismatch: response_domain_mismatch,@12345 If your iPhone camera won't power on or screen is dark try these steps.
+regression_10,My iPhone battery is draining very quickly,battery_charging,response_domain_mismatch: resolution_divergence,Go to Settings > Wi-Fi and turn off Wi-Fi.
+regression_10,My iPhone battery is draining very quickly,battery_charging,domain_match + actionable_guidance,Check Battery Usage in Settings and identify apps using significant power.
+regression_10,I cannot connect to WiFi,wifi_connectivity,domain_match + actionable_guidance,"Go to Settings > Wi-Fi, tap your network, tap Forget this Network, then reconnect."
+regression_10,I cannot connect to WiFi,wifi_connectivity,no_actionable_guidance,Please send us a DM so we can look into this for you.
+regression_10,My Apple ID password is not working,apple_id_icloud,issue_mismatch: response_domain_mismatch,Restart your iPhone and check the camera lens for dirt.
+regression_10,My screen is completely black,screen_display,no_actionable_guidance,We released iOS 11.1.1 which contains a fix for autocorrect and keyboard typing.
+regression_10,My SIM card says Invalid SIM,calls_cellular,domain_match + actionable_guidance,"Remove the SIM card with a paperclip, inspect it for damage, and reinsert it firmly."
+regression_10,The YouTube app keeps crashing,app_problems,application_mismatch,Delete and reinstall the Apple Music app from the App Store.
+regression_10,My iPhone is unable to check for iOS update,ios_software_update,domain_match + actionable_guidance,"Go to Settings > General > iPhone Storage, delete the update file, and download the i"
+regression_10,Hey Apple need help,other_unclear,no_actionable_guidance,Let us know what is going on and we will be happy to help!

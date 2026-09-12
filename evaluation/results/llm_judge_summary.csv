@@ -1,0 +1,24 @@
+metric,value
+requested,50
+successful,12
+failed_or_unavailable,38
+status,INCOMPLETE
+reason,Groq/Cloudflare HTTP 403 error 1010
+examples_requested,50
+examples_processed,13
+successful_judgments,12
+failed_judgments,1
+unavailable_judgments,37
+provider,groq
+model,openai/gpt-oss-20b
+partial_sample_size,12
+partial_average_correctness,1.5833
+partial_average_groundedness,2.0833
+partial_average_relevance,1.9167
+partial_average_completeness,1.5000
+partial_average_tone,4.2500
+partial_average_unsupported_claims,3.4167
+partial_average_overall_score,2.4583
+partial_unsupported_claims_detected_count,5
+historical_baseline_file,evaluation/results/historical_llm_judge_summary.csv
+note,PARTIAL 12/50 EVALUATION ONLY - DO NOT USE AS 50-CASE FINAL SCORE

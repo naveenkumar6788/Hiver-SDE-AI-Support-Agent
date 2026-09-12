@@ -1,0 +1,2 @@
+dimension,spearman_rho,mean_absolute_difference,exact_agreement_rate,plus_minus_1_agreement_rate,interpretation
+status,NOT_YET_AVAILABLE,N/A,N/A,N/A,Awaiting manual human ratings in golden_set/human_judge_50.csv

@@ -1,0 +1,2 @@
+total_queries,evidence_used,evidence_rejected,safe_to_answer,grounded,evidence_supported,insufficient_evidence,average_evidence_relevance,average_evidence_quality,average_problem_match,response_type_distribution
+12,11,1,12,12,11,1,0.7536,0.9191,0.9273,"{'troubleshooting': 10, 'clarification_question': 1, 'insufficient_evidence': 1}"
