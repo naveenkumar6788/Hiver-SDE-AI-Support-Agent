@@ -25,9 +25,7 @@ from src.agent.reply_generator import (
 )
 
 
-# ---------------------------------------------------------------------------
 # Test 1: App crash vs app download — crash query must reject download-focused evidence
-# ---------------------------------------------------------------------------
 class TestAppCrashVsDownload:
     def test_crash_query_rejects_download_evidence(self):
         """When customer reports app crashing, evidence about cannot-download must be rejected."""
@@ -69,9 +67,7 @@ class TestAppCrashVsDownload:
         )
 
 
-# ---------------------------------------------------------------------------
 # Test 2: iMessage vs Wi-Fi confusion prevention
-# ---------------------------------------------------------------------------
 class TestIMessageVsWifi:
     def test_imessage_activation_rejects_wifi_network_reset(self):
         """iMessage activation query must reject generic network reset evidence."""
@@ -95,9 +91,7 @@ class TestIMessageVsWifi:
         )
 
 
-# ---------------------------------------------------------------------------
 # Test 3: YouTube video download evidence must not come from Apple Music
-# ---------------------------------------------------------------------------
 class TestYoutubeVsAppleMusic:
     def test_youtube_query_rejects_apple_music_evidence(self):
         """YouTube-related query must reject Apple Music / iTunes evidence."""
@@ -118,9 +112,7 @@ class TestYoutubeVsAppleMusic:
         )
 
 
-# ---------------------------------------------------------------------------
 # Test 4: USB/car music must reject iCloud backup evidence
-# ---------------------------------------------------------------------------
 class TestUsbMusicVsBackup:
     def test_usb_music_accepts_relevant_evidence(self):
         """USB car music query should accept USB/CarPlay-relevant evidence or reject
@@ -179,9 +171,7 @@ class TestUsbMusicVsBackup:
         )
 
 
-# ---------------------------------------------------------------------------
 # Test 5: Already-resolved customer gets acknowledgement, not diagnosis
-# ---------------------------------------------------------------------------
 class TestAlreadyResolvedCustomer:
     def test_resolved_message_detected(self):
         """Customer saying 'Fixed! Thanks' should be identified as resolved."""
@@ -212,9 +202,7 @@ class TestAlreadyResolvedCustomer:
         )
 
 
-# ---------------------------------------------------------------------------
 # Test 6: SIM unlocking vs SIM tray rejection
-# ---------------------------------------------------------------------------
 class TestCarrierUnlockVsSimTray:
     def test_carrier_unlock_rejects_sim_tray_evidence(self):
         """Carrier unlock query must reject physical SIM ejector evidence."""
@@ -235,9 +223,7 @@ class TestCarrierUnlockVsSimTray:
         )
 
 
-# ---------------------------------------------------------------------------
 # Test 7: Account takeover / hacking must escalate
-# ---------------------------------------------------------------------------
 class TestAccountTakeoverEscalation:
     def test_hacked_account_is_sensitive(self):
         """Account hack report must be flagged as sensitive (leading to ESCALATE)."""
@@ -256,9 +242,7 @@ class TestAccountTakeoverEscalation:
         )
 
 
-# ---------------------------------------------------------------------------
 # Test 8: Disabled/locked Apple ID must escalate
-# ---------------------------------------------------------------------------
 class TestLockedAppleId:
     def test_disabled_apple_id_is_sensitive(self):
         """Disabled Apple ID must be flagged as sensitive."""
@@ -269,9 +253,7 @@ class TestLockedAppleId:
         )
 
 
-# ---------------------------------------------------------------------------
 # Test 9: Generic response detection — DM-redirect patterns
-# ---------------------------------------------------------------------------
 class TestGenericResponseDetection:
     def test_dm_redirect_without_action_is_generic(self):
         """Pure DM-redirect with no troubleshooting should be generic."""
@@ -312,9 +294,7 @@ class TestGenericResponseDetection:
         )
 
 
-# ---------------------------------------------------------------------------
 # Test 10: Specificity scoring rewards specific evidence
-# ---------------------------------------------------------------------------
 class TestSpecificityScoring:
     def test_specific_evidence_scores_higher_than_generic(self):
         """Evidence matching the customer's specific sub-problem should score higher."""
@@ -360,9 +340,7 @@ class TestSpecificityScoring:
             pass
 
 
-# ---------------------------------------------------------------------------
 # Test 11: Carrier unlock query rejects physical SIM size advice
-# ---------------------------------------------------------------------------
 class TestCarrierUnlockVsSimSize:
     def test_carrier_unlock_rejects_sim_size_evidence(self):
         """Carrier unlock inquiry must reject advice to try another sized SIM card."""
@@ -383,9 +361,7 @@ class TestCarrierUnlockVsSimSize:
         assert "carrier_unlock" in reason.lower() or "tray" in reason.lower() or "conflict" in reason.lower()
 
 
-# ---------------------------------------------------------------------------
 # Test 12: App Store password settings rejects Wi-Fi troubleshooting
-# ---------------------------------------------------------------------------
 class TestAppStorePasswordVsWifi:
     def test_app_store_password_rejects_wifi_troubleshooting(self):
         """Inquiry about App Store password requirements must reject Wi-Fi network reset advice."""
@@ -405,9 +381,7 @@ class TestAppStorePasswordVsWifi:
         )
 
 
-# ---------------------------------------------------------------------------
 # Test 13: USB car music auto-play rejects generic restart advice
-# ---------------------------------------------------------------------------
 class TestUsbMusicVsRestart:
     def test_usb_car_music_rejects_restart(self):
         """USB car music auto-play inquiry must reject advice to restart the computer or device."""
@@ -427,9 +401,7 @@ class TestUsbMusicVsRestart:
         )
 
 
-# ---------------------------------------------------------------------------
 # Test 14: Battery health inquiry rejects generic update performance boilerplate
-# ---------------------------------------------------------------------------
 class TestBatteryHealthVsGenericUpdate:
     def test_battery_health_rejects_generic_boilerplate(self):
         """Inquiry about battery health percentage must reject generic battery boilerplate."""
@@ -449,9 +421,7 @@ class TestBatteryHealthVsGenericUpdate:
         )
 
 
-# ---------------------------------------------------------------------------
 # Test 15: Resolved message with bug question acknowledges resolution and mentions updates
-# ---------------------------------------------------------------------------
 class TestResolvedWithBugQuestion:
     def test_resolved_with_bug_question(self):
         """Customer stating phone works after restart but asking if it was a bug gets resolution acknowledgement."""
@@ -475,9 +445,7 @@ class TestResolvedWithBugQuestion:
         assert "reset network settings" not in res["reply"].lower()
 
 
-# ---------------------------------------------------------------------------
 # Test 16: Named app clarification does not ask 'which app is affected'
-# ---------------------------------------------------------------------------
 class TestNamedAppClarification:
     def test_named_app_clarification_targets_app(self):
         """When customer explicitly names the app, clarification should ask what occurs, not which app."""
@@ -491,9 +459,7 @@ class TestNamedAppClarification:
         assert "error" in reply.lower() or "occur" in reply.lower() or "use the app" in reply.lower()
 
 
-# ---------------------------------------------------------------------------
 # Test 17: Hardware safety hazard (swollen / hot battery) must escalate
-# ---------------------------------------------------------------------------
 class TestHardwareSafetyHazardEscalation:
     def test_hardware_safety_variants_are_sensitive(self):
         """Hardware safety hazards must be flagged as sensitive hardware_hazard."""

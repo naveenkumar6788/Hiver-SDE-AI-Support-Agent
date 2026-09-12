@@ -32,9 +32,7 @@ from src.intent.classifier import IntentClassifier
 THREADS_PATH = PROJECT_ROOT / "data" / "processed" / "applesupport_threads.csv"
 
 
-# ============================================================
 # Utility Functions
-# ============================================================
 
 def normalize_id(value):
     """Normalize tweet and conversation IDs to strings without float artifacts."""
@@ -56,10 +54,8 @@ def clean_text(text):
 
     text = str(text).lower()
 
-    # Remove URLs
     text = re.sub(r"https?://\S+", " ", text)
 
-    # Remove Twitter user mentions (@AppleSupport, @123456, etc.)
     text = re.sub(r"@\w+", " ", text)
 
     # Decode common HTML / Twitter noise
@@ -89,7 +85,6 @@ def clean_text(text):
     # Keep letters, numbers, underscores (for compound terms), apostrophes, and spaces
     text = re.sub(r"[^a-z0-9_'\s]", " ", text)
 
-    # Normalize whitespace
     text = re.sub(r"\s+", " ", text).strip()
 
     return text
@@ -117,9 +112,7 @@ def is_informative_message(cleaned_text):
     return True
 
 
-# ============================================================
 # Evidence Quality Evaluation
-# ============================================================
 
 GENERIC_DM_PATTERNS = [
     re.compile(p, re.IGNORECASE) for p in [
@@ -294,9 +287,7 @@ from src.retrieval.evidence_relevance import (
 )
 
 
-# ============================================================
 # AppleSupport Retriever Class
-# ============================================================
 
 class AppleSupportRetriever:
 
@@ -311,8 +302,6 @@ class AppleSupportRetriever:
         # 1. Load reconstructed conversations
         # ------------------------------------------------------
         df = pd.read_csv(threads_path)
-
-        # Normalize IDs
         df["tweet_id"] = df["tweet_id"].apply(normalize_id)
         df["conversation_id"] = df["conversation_id"].apply(normalize_id)
 
@@ -325,7 +314,6 @@ class AppleSupportRetriever:
         agent_map = agent_df.groupby("conversation_id")["text"].first().to_dict()
         customer_df["response"] = customer_df["conversation_id"].map(agent_map)
 
-        # Drop customer messages without an AppleSupport response
         customer_df = customer_df.dropna(subset=["response"]).copy()
         customer_df["response"] = customer_df["response"].fillna("").astype(str)
 
@@ -340,7 +328,6 @@ class AppleSupportRetriever:
         customer_df["clean_text"] = customer_df["text"].apply(clean_text)
         customer_df = customer_df[customer_df["clean_text"].apply(is_informative_message)].copy()
 
-        # Deduplicate exact cleaned customer messages
         customer_df = customer_df.drop_duplicates(subset=["clean_text"], keep="first")
         self.df = customer_df.reset_index(drop=True)
 
@@ -571,14 +558,11 @@ class AppleSupportRetriever:
 
         filtered_results = filtered_results.head(top_k).copy()
 
-        # Check grounding status
         has_grounded = bool(filtered_results["relevance_accepted"].any())
         filtered_results.attrs["grounded"] = has_grounded
 
-        # Add 1-indexed rank
         filtered_results["rank"] = range(1, len(filtered_results) + 1)
 
-        # Aliases for robust caller access
         filtered_results["customer_text"] = filtered_results["text"]
         filtered_results["historical_response"] = filtered_results["response"]
         filtered_results["historical_intent"] = filtered_results["retrieval_intent"]
@@ -624,9 +608,7 @@ class AppleSupportRetriever:
         return filtered_results[out_cols].reset_index(drop=True)
 
 
-# ============================================================
 # Standalone Test (15 Verification Cases)
-# ============================================================
 
 if __name__ == "__main__":
     retriever = AppleSupportRetriever()

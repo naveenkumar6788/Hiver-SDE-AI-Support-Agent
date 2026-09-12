@@ -18,9 +18,7 @@ Features:
 import re
 from typing import Dict, List, Set, Tuple, Any, Optional
 
-# ============================================================
 # Configurable Weights, Penalties, and Thresholds
-# ============================================================
 
 # Relevance score weights (sum = 1.0)
 RELEVANCE_WEIGHTS: Dict[str, float] = {
@@ -42,9 +40,7 @@ MIN_EVIDENCE_RELEVANCE: float = 0.55
 MIN_EVIDENCE_QUALITY: float = 0.40
 MIN_SPECIFIC_PROBLEM_MATCH: float = 0.40
 
-# ============================================================
 # Reusable Entity Extractor Taxonomy
-# ============================================================
 
 APP_ENTITIES: Dict[str, List[str]] = {
     "youtube": ["youtube"],
@@ -150,9 +146,7 @@ CONFLICTING_DOMAINS: Set[Tuple[str, str]] = {
     ("mac", "iphone"),
 }
 
-# ============================================================
 # Specific Problem Taxonomy & Extractor
-# ============================================================
 
 SPECIFIC_PROBLEM_PATTERNS: Dict[str, Dict[str, str]] = {
     "ads_in_apps": {
@@ -286,9 +280,7 @@ DIAGNOSTIC_PATTERNS = [
 ]
 
 
-# ============================================================
 # 1. extract_problem_terms()
-# ============================================================
 
 def extract_problem_terms(text: str) -> Dict[str, Any]:
     """
@@ -325,9 +317,7 @@ def extract_problem_terms(text: str) -> Dict[str, Any]:
     }
 
 
-# ============================================================
 # 2. detect_response_problem()
-# ============================================================
 
 def detect_response_problem(response: str) -> Dict[str, Any]:
     """
@@ -404,9 +394,7 @@ def detect_response_problem(response: str) -> Dict[str, Any]:
     }
 
 
-# ============================================================
 # 3. calculate_customer_problem_similarity()
-# ============================================================
 
 def calculate_customer_problem_similarity(
     query: str,
@@ -453,9 +441,7 @@ def calculate_customer_problem_similarity(
     return 0.15, "no_problem_overlap"
 
 
-# ============================================================
 # 4. calculate_response_problem_similarity()
-# ============================================================
 
 def calculate_response_problem_similarity(
     query: str,
@@ -507,9 +493,7 @@ def calculate_response_problem_similarity(
     return 0.20, "unaligned_response"
 
 
-# ============================================================
 # 5. calculate_domain_match()
-# ============================================================
 
 def calculate_domain_match(
     query_domains: List[str],
@@ -535,9 +519,7 @@ def calculate_domain_match(
     return 0.20, "disjoint_domains"
 
 
-# ============================================================
 # 6. calculate_action_match()
-# ============================================================
 
 def calculate_action_match(
     query_problems: Dict[str, Any],
@@ -576,9 +558,7 @@ def calculate_action_match(
     return 0.20, "low_action_match"
 
 
-# ============================================================
 # 7. detect_problem_conflict()
-# ============================================================
 
 def detect_problem_conflict(
     query: str,
@@ -678,9 +658,7 @@ def detect_problem_conflict(
     return False, ""
 
 
-# ============================================================
 # 8. calculate_final_evidence_score()
-# ============================================================
 
 def calculate_final_evidence_score(
     query: str,
@@ -794,9 +772,7 @@ def calculate_final_evidence_score(
     }
 
 
-# ============================================================
 # 9. is_specific_evidence_safe()
-# ============================================================
 
 def is_specific_evidence_safe(
     query: str,
@@ -822,9 +798,7 @@ def is_specific_evidence_safe(
     return eval_result["evidence_safe"], eval_result["evidence_rejection_reason"]
 
 
-# ============================================================
 # 10. calculate_evidence_relevance() (Compatibility Wrapper)
-# ============================================================
 
 def calculate_evidence_relevance(
     query: str,

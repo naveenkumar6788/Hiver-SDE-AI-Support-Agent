@@ -41,9 +41,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 
-# ============================================================
 # Environment
-# ============================================================
 
 try:
     from dotenv import load_dotenv
@@ -62,9 +60,7 @@ except ImportError:
     pass
 
 
-# ============================================================
 # Judge System Prompt
-# ============================================================
 
 JUDGE_SYSTEM_PROMPT = """You are evaluating an AI customer-support response for AppleSupport on Twitter.
 
@@ -152,9 +148,7 @@ You MUST return ONLY valid JSON matching this exact schema:
 """
 
 
-# ============================================================
 # Prompt Builder
-# ============================================================
 
 def build_judge_prompt(
     customer_message: str,
@@ -203,9 +197,7 @@ def build_judge_prompt(
     return "\n".join(prompt_parts)
 
 
-# ============================================================
 # Response Validation
-# ============================================================
 
 def parse_and_validate_judge_response(
     raw_text: str
@@ -242,9 +234,7 @@ def parse_and_validate_judge_response(
         "escalation_appropriateness",
     ]
 
-    # --------------------------------------------------------
     # Validate dimensions
-    # --------------------------------------------------------
 
     for dim in required_dims:
 
@@ -283,9 +273,7 @@ def parse_and_validate_judge_response(
 
         data[dim]["score"] = int(round(score_val))
 
-    # --------------------------------------------------------
     # Validate unsupported claims
-    # --------------------------------------------------------
 
     unsupported = data["unsupported_claims"]
 
@@ -310,9 +298,7 @@ def parse_and_validate_judge_response(
         for claim in unsupported["claims"]
     ]
 
-    # --------------------------------------------------------
     # Calculate overall score
-    # --------------------------------------------------------
 
     core_scores = [
         data["correctness"]["score"],
@@ -330,9 +316,7 @@ def parse_and_validate_judge_response(
 
     data["overall_score"] = computed_overall
 
-    # --------------------------------------------------------
     # Overall reason
-    # --------------------------------------------------------
 
     if (
         "overall_reason" not in data
@@ -352,9 +336,7 @@ def parse_and_validate_judge_response(
     return data
 
 
-# ============================================================
 # Mock Judge
-# ============================================================
 
 class MockJudgeProvider:
     """
@@ -425,9 +407,7 @@ class MockJudgeProvider:
             and not ev.startswith("NONE")
         )
 
-        # ----------------------------------------------------
         # Unsupported claims
-        # ----------------------------------------------------
 
         unsupported_claims_found = []
 
@@ -471,9 +451,7 @@ class MockJudgeProvider:
                         f"not found in evidence"
                     )
 
-        # ----------------------------------------------------
         # Grounding
-        # ----------------------------------------------------
 
         if unsupported_claims_found:
 
@@ -557,9 +535,7 @@ class MockJudgeProvider:
                 "Zero unsupported claims found."
             )
 
-        # ----------------------------------------------------
         # Tone
-        # ----------------------------------------------------
 
         tone_score = 5
 
@@ -568,9 +544,7 @@ class MockJudgeProvider:
             "appropriate for official Apple Support."
         )
 
-        # ----------------------------------------------------
         # Relevance / completeness / correctness
-        # ----------------------------------------------------
 
         if (
             "insufficient" in reply_lower
@@ -644,9 +618,7 @@ class MockJudgeProvider:
                 "the issue."
             )
 
-        # ----------------------------------------------------
         # Escalation
-        # ----------------------------------------------------
 
         if esc == "ESCALATE":
 
@@ -695,9 +667,7 @@ class MockJudgeProvider:
                     "marginal evidence grounding."
                 )
 
-        # ----------------------------------------------------
         # Result
-        # ----------------------------------------------------
 
         data = {
             "correctness": {
@@ -790,9 +760,7 @@ def parse_rate_limit_wait(headers: Any, default_wait: float, max_wait: float = 3
     return min(max(2.0, wait_time), max_wait)
 
 
-# ============================================================
 # External API Judge
-# ============================================================
 
 class ExternalApiJudgeProvider:
     """
@@ -843,9 +811,7 @@ class ExternalApiJudgeProvider:
         self.max_retries = max(1, int(max_retries))
         self.max_retry_wait = max(1.0, float(max_retry_wait))
 
-    # ========================================================
     # OpenAI-compatible providers
-    # ========================================================
 
     def generate(
         self,
@@ -864,9 +830,7 @@ class ExternalApiJudgeProvider:
             "ollama"
         ):
 
-            # ------------------------------------------------
             # URL + Headers
-            # ------------------------------------------------
 
             if self.provider == "groq":
 
@@ -935,9 +899,7 @@ class ExternalApiJudgeProvider:
                     "User-Agent": "Hiver-SDE-AI-Support-Agent/1.0",
                 }
 
-            # ------------------------------------------------
             # Payload
-            # ------------------------------------------------
 
             payload = {
                 "model": self.model,
@@ -957,9 +919,7 @@ class ExternalApiJudgeProvider:
                 ]
             }
 
-            # ------------------------------------------------
             # Retry configuration
-            # ------------------------------------------------
 
             max_retries = self.max_retries
 
@@ -993,9 +953,7 @@ class ExternalApiJudgeProvider:
                             response_text
                         )
 
-                        # ------------------------------------
                         # Validate response
-                        # ------------------------------------
 
                         if "choices" not in result:
 
@@ -1027,9 +985,7 @@ class ExternalApiJudgeProvider:
 
                         return content
 
-                # ------------------------------------------------
                 # HTTP errors
-                # ------------------------------------------------
 
                 except urllib.error.HTTPError as he:
 
@@ -1048,9 +1004,7 @@ class ExternalApiJudgeProvider:
                     except Exception:
                         pass
 
-                    # --------------------------------------------
                     # HTTP 429 - Rate limit
-                    # --------------------------------------------
 
                     if he.code == 429:
 
@@ -1086,9 +1040,7 @@ class ExternalApiJudgeProvider:
                             f"{self.max_retries} attempts."
                         ) from he
 
-                    # --------------------------------------------
                     # Other HTTP errors
-                    # --------------------------------------------
 
                     err_msg = (
                         f"HTTP Error {he.code}: "
@@ -1105,9 +1057,7 @@ class ExternalApiJudgeProvider:
                         err_msg
                     ) from he
 
-                # ------------------------------------------------
                 # Timeout
-                # ------------------------------------------------
 
                 except TimeoutError as e:
 
@@ -1137,9 +1087,7 @@ class ExternalApiJudgeProvider:
                         f"{self.max_retries} attempts."
                     ) from e
 
-                # ------------------------------------------------
                 # Network error
-                # ------------------------------------------------
 
                 except urllib.error.URLError as e:
 
@@ -1174,9 +1122,7 @@ class ExternalApiJudgeProvider:
                 f"{self.max_retries} attempts."
             )
 
-        # ========================================================
         # Anthropic
-        # ========================================================
 
         elif self.provider == "anthropic":
 
@@ -1226,9 +1172,7 @@ class ExternalApiJudgeProvider:
 
                 return result["content"][0]["text"]
 
-        # ========================================================
         # Gemini
-        # ========================================================
 
         elif self.provider == "gemini":
 
@@ -1303,9 +1247,7 @@ class ExternalApiJudgeProvider:
             )
 
 
-# ============================================================
 # Main LLM Judge
-# ============================================================
 
 class LLMJudge:
     """
@@ -1339,39 +1281,67 @@ class LLMJudge:
             )
         ).strip().lower()
 
-        self.api_key = (
+        # Check general LLM_API_KEY first, then provider-specific environment variables
+        api_key_candidate = (
             api_key
             if api_key is not None
-            else os.environ.get(
-                "LLM_API_KEY",
-                ""
-            )
+            else os.environ.get("LLM_API_KEY", "")
         ).strip()
 
-        self.model_name = (
+        if not api_key_candidate:
+            if self.provider_name == "groq":
+                api_key_candidate = os.environ.get("GROQ_API_KEY", "").strip()
+            elif self.provider_name == "openai":
+                api_key_candidate = os.environ.get("OPENAI_API_KEY", "").strip()
+            elif self.provider_name == "openrouter":
+                api_key_candidate = os.environ.get("OPENROUTER_API_KEY", "").strip()
+            elif self.provider_name == "anthropic":
+                api_key_candidate = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+            elif self.provider_name == "gemini":
+                api_key_candidate = os.environ.get("GEMINI_API_KEY", "").strip()
+
+        self.api_key = api_key_candidate
+
+        # Check model name with provider-specific fallback
+        model_candidate = (
             model
             if model is not None
-            else os.environ.get(
-                "LLM_MODEL",
-                ""
-            )
+            else os.environ.get("LLM_MODEL", "")
         ).strip()
 
-        self.base_url = (
+        if not model_candidate:
+            if self.provider_name == "groq":
+                model_candidate = os.environ.get("GROQ_MODEL", "openai/gpt-oss-20b").strip()
+            elif self.provider_name == "openai":
+                model_candidate = os.environ.get("OPENAI_MODEL", "gpt-4o-mini").strip()
+            elif self.provider_name == "openrouter":
+                model_candidate = os.environ.get("OPENROUTER_MODEL", "").strip()
+            elif self.provider_name == "anthropic":
+                model_candidate = os.environ.get("ANTHROPIC_MODEL", "").strip()
+            elif self.provider_name == "gemini":
+                model_candidate = os.environ.get("GEMINI_MODEL", "").strip()
+
+        self.model_name = model_candidate
+
+        # Check base URL with provider-specific fallback
+        base_url_candidate = (
             base_url
             if base_url is not None
-            else os.environ.get(
-                "LLM_BASE_URL",
-                ""
-            )
-        ).strip() or None
+            else os.environ.get("LLM_BASE_URL", "")
+        ).strip()
+
+        if not base_url_candidate:
+            if self.provider_name == "openai":
+                base_url_candidate = os.environ.get("OPENAI_BASE_URL", "").strip()
+            elif self.provider_name == "groq":
+                base_url_candidate = os.environ.get("GROQ_BASE_URL", "").strip()
+
+        self.base_url = base_url_candidate or None
 
         self.max_retries = max(1, int(max_retries))
         self.max_retry_wait = max(1.0, float(max_retry_wait))
 
-        # ----------------------------------------------------
         # Mock
-        # ----------------------------------------------------
 
         if (
             not self.provider_name
@@ -1388,9 +1358,7 @@ class LLMJudge:
 
             self.provider = MockJudgeProvider()
 
-        # ----------------------------------------------------
         # Real provider
-        # ----------------------------------------------------
 
         else:
 
@@ -1401,27 +1369,19 @@ class LLMJudge:
                     f"Real LLM provider "
                     f"'{self.provider_name}' "
                     f"was selected, but "
-                    f"LLM_API_KEY is missing."
+                    f"LLM_API_KEY is missing. "
+                    f"Please set LLM_API_KEY or {self.provider_name.upper()}_API_KEY."
                 )
 
             if not self.model_name:
 
-                # Convenient default specifically for Groq.
-                if self.provider_name == "groq":
-
-                    self.model_name = (
-                        "openai/gpt-oss-20b"
-                    )
-
-                else:
-
-                    raise ValueError(
-                        f"Configuration Error: "
-                        f"Real LLM provider "
-                        f"'{self.provider_name}' "
-                        f"was selected, but "
-                        f"LLM_MODEL is missing."
-                    )
+                raise ValueError(
+                    f"Configuration Error: "
+                    f"Real LLM provider "
+                    f"'{self.provider_name}' "
+                    f"was selected, but "
+                    f"LLM_MODEL is missing."
+                )
 
             self.provider = ExternalApiJudgeProvider(
                 provider=self.provider_name,
@@ -1433,9 +1393,7 @@ class LLMJudge:
             )
 
 
-    # ========================================================
     # Judge one example
-    # ========================================================
 
     def judge(
         self,
@@ -1470,9 +1428,7 @@ class LLMJudge:
         last_error = ""
         raw_output = ""
 
-        # ----------------------------------------------------
         # Two attempts for provider/parser failures.
-        # ----------------------------------------------------
 
         for attempt in range(2):
 
@@ -1517,9 +1473,7 @@ class LLMJudge:
 
                     time.sleep(2)
 
-        # ====================================================
         # FAILURE
-        # ====================================================
 
         failure_reason = (
             f"Judge error: {last_error}"
@@ -1595,9 +1549,7 @@ class LLMJudge:
         }
 
 
-# ============================================================
 # Self Test
-# ============================================================
 
 if __name__ == "__main__":
 

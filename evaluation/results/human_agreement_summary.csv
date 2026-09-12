@@ -1,8 +1,9 @@
-dimension,sample_size,mean_human_score,mean_judge_score,exact_agreement,within_1_point_agreement,mean_absolute_difference,spearman_correlation,pearson_correlation,weighted_cohen_kappa,status
-correctness,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED
-groundedness,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED
-relevance,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED
-completeness,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED
-tone,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED
-unsupported_claims,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED
-overall,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED
+dimension,sample_size,paired_cases,human_mean,llm_mean,mean_human_score,mean_judge_score,exact_agreement,within_1_point_agreement,mean_absolute_difference,spearman_rho,spearman_correlation,pearson_correlation,weighted_cohen_kappa,status
+correctness,0,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED
+groundedness,0,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED
+relevance,0,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED
+completeness,0,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED
+tone,0,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED
+unsupported_claims,0,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED
+escalation_appropriateness,0,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED
+overall,0,0,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,N/A,NOT_YET_VERIFIED

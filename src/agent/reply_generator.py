@@ -19,9 +19,7 @@ from src.retrieval.evidence_relevance import (
 )
 
 
-# ============================================================
 # DOMAIN PATTERNS
-# ============================================================
 
 DOMAIN_PATTERNS = {
     "battery": [
@@ -201,9 +199,7 @@ DOMAIN_PATTERNS = {
 }
 
 
-# ============================================================
 # RESPONSE DOMAIN PATTERNS
-# ============================================================
 
 RESPONSE_DOMAIN_PATTERNS = {
     "battery": [
@@ -320,9 +316,7 @@ RESPONSE_DOMAIN_PATTERNS = {
 }
 
 
-# ============================================================
 # INTENT -> DOMAIN MAPPING
-# ============================================================
 
 INTENT_DOMAINS = {
     "battery_charging": {
@@ -382,9 +376,7 @@ INTENT_DOMAINS = {
 }
 
 
-# ============================================================
 # CONFLICTING DOMAINS
-# ============================================================
 
 CONFLICTING_DOMAINS = {
     ("battery", "wifi"),
@@ -438,9 +430,7 @@ CONFLICTING_DOMAINS = {
 }
 
 
-# ============================================================
 # COMPATIBLE HIERARCHIES
-# ============================================================
 
 COMPATIBLE_HIERARCHIES = {
     ("youtube", "app_problem"),
@@ -468,9 +458,7 @@ COMPATIBLE_HIERARCHIES = {
 }
 
 
-# ============================================================
 # BASIC UTILITIES
-# ============================================================
 
 def normalize_text(text: str) -> str:
     if not text:
@@ -534,9 +522,7 @@ def clean_historical_response(text: str) -> str:
     return text
 
 
-# ============================================================
 # DOMAIN DETECTION
-# ============================================================
 
 def detect_domains(text: str) -> List[str]:
     """Detect domains in a customer message or query."""
@@ -616,17 +602,14 @@ def are_domains_compatible(
     if not query_domains or not response_domains:
         return False, "missing_domains"
 
-    # Direct match
     if set(query_domains) & set(response_domains):
         return True, "direct_domain_match"
 
-    # Hierarchical match
     for q in query_domains:
         for r in response_domains:
             if (q, r) in COMPATIBLE_HIERARCHIES:
                 return True, f"compatible_hierarchy: {q} and {r}"
 
-    # Explicit conflicts
     for q in query_domains:
         for r in response_domains:
             if (
@@ -639,9 +622,7 @@ def are_domains_compatible(
     return False, "unrelated_domains"
 
 
-# ============================================================
 # RESPONSE CLASSIFICATION HELPERS
-# ============================================================
 
 ACTION_WORDS = [
     "try",
@@ -852,9 +833,7 @@ def extract_guidance_components(
     }
 
 
-# ============================================================
 # SENSITIVE TOPICS
-# ============================================================
 
 def check_sensitive_topic(text: str) -> Tuple[bool, str]:
     """Identify high-risk topics requiring human escalation."""
@@ -927,9 +906,7 @@ def check_sensitive_topic(text: str) -> Tuple[bool, str]:
     return False, ""
 
 
-# ============================================================
 # RESOLUTION DETECTION
-# ============================================================
 
 def is_message_resolved(text: str) -> bool:
     """
@@ -979,9 +956,7 @@ def is_message_resolved(text: str) -> bool:
     return False
 
 
-# ============================================================
 # INTENT PREDICTION
-# ============================================================
 
 def predict_intent(
     text: str,
@@ -1047,7 +1022,6 @@ def predict_intent(
 
 
 # ============================================================
-# DEBUG PRINTER
 # ============================================================
 
 def _print_debug_evidence(
@@ -1103,9 +1077,7 @@ def _print_debug_evidence(
     print("=" * 50 + "\n")
 
 
-# ============================================================
 # EVIDENCE SAFETY GATE
-# ============================================================
 
 def is_evidence_safe(
     query: str,
@@ -1176,9 +1148,7 @@ def is_evidence_safe(
     if evidence_response is not None:
         resp_text = str(evidence_response)
 
-    # --------------------------------------------------------
     # 1. Empty evidence
-    # --------------------------------------------------------
 
     if not resp_text.strip():
         if debug:
@@ -1193,9 +1163,7 @@ def is_evidence_safe(
 
         return False, "empty_evidence"
 
-    # --------------------------------------------------------
     # 2. Generic response
-    # --------------------------------------------------------
 
     if is_generic_response(resp_text):
         if debug:
@@ -1210,9 +1178,7 @@ def is_evidence_safe(
 
         return False, "generic_response"
 
-    # --------------------------------------------------------
     # 3. Domains
-    # --------------------------------------------------------
 
     q_domains = (
         query_domains
@@ -1228,9 +1194,7 @@ def is_evidence_safe(
         resp_text
     )
 
-    # --------------------------------------------------------
     # 4. Intent/domain consistency
-    # --------------------------------------------------------
 
     if (
         query_intent
@@ -1261,16 +1225,12 @@ def is_evidence_safe(
                 f"intent_domain_mismatch: {query_intent}"
             )
 
-    # --------------------------------------------------------
     # 5. Normalized text
-    # --------------------------------------------------------
 
     q_norm = normalize_text(query)
     r_norm = normalize_text(resp_text)
 
-    # --------------------------------------------------------
     # 6. Action / diagnostic checks
-    # --------------------------------------------------------
 
     has_action = response_contains_action(
         resp_text
@@ -1293,9 +1253,7 @@ def is_evidence_safe(
         in resp_text.lower()
     )
 
-    # --------------------------------------------------------
     # 7. Battery vs Wi-Fi/Bluetooth
-    # --------------------------------------------------------
 
     if "battery" in q_domains:
 
@@ -1325,9 +1283,7 @@ def is_evidence_safe(
                 "response_domain_mismatch: resolution_divergence"
             )
 
-    # --------------------------------------------------------
     # 8. Screen divergence
-    # --------------------------------------------------------
 
     if "screen" in q_domains:
 
@@ -1371,9 +1327,7 @@ def is_evidence_safe(
                 "issue_mismatch: facetime_divergence"
             )
 
-    # --------------------------------------------------------
     # 9. SIM / carrier divergence
-    # --------------------------------------------------------
 
     if (
         "sim_hardware" in q_domains
@@ -1403,9 +1357,7 @@ def is_evidence_safe(
                 "issue_mismatch: resolution_divergence"
             )
 
-    # --------------------------------------------------------
     # 10. YouTube vs Apple Music
-    # --------------------------------------------------------
 
     if "youtube" in q_domains:
 
@@ -1426,9 +1378,7 @@ def is_evidence_safe(
 
             return False, "application_mismatch"
 
-    # --------------------------------------------------------
     # Carrier unlock vs physical SIM tray divergence
-    # --------------------------------------------------------
     # Carrier unlock vs physical SIM tray divergence
     # --------------------------------------------------------
     if (
@@ -1450,9 +1400,7 @@ def is_evidence_safe(
                 )
             return False, "carrier_unlock_vs_tray_divergence"
 
-    # --------------------------------------------------------
     # App Store password settings vs download/Wi-Fi error
-    # --------------------------------------------------------
     if (
         any(k in q_norm for k in ["require a password", "password for already purchased", "password for any new apps", "password settings", "free apps password", "allow no password"])
     ):
@@ -1471,9 +1419,7 @@ def is_evidence_safe(
                 )
             return False, "app_password_vs_download_network_divergence"
 
-    # --------------------------------------------------------
     # USB car music playback vs restart divergence
-    # --------------------------------------------------------
     if (
         "usb" in q_norm
         and any(k in q_norm for k in ["song starts", "song", "music", "car", "listening to", "auto play", "autoplay"])
@@ -1498,9 +1444,7 @@ def is_evidence_safe(
                 )
             return False, "usb_car_playback_vs_restart_divergence"
 
-    # --------------------------------------------------------
     # Battery health inquiry vs generic battery performance update
-    # --------------------------------------------------------
     if "battery health" in q_norm or "figure out the battery health" in q_norm:
         if (
             ("article and send us a dm" in r_norm or "tell us, what's happening with the battery" in r_norm)
@@ -1517,9 +1461,7 @@ def is_evidence_safe(
                 )
             return False, "battery_health_vs_generic_performance_divergence"
 
-    # --------------------------------------------------------
     # App download vs app crash divergence
-    # --------------------------------------------------------
     if (
         any(k in q_norm for k in ["download", "install", "cannot download", "won't download", "unable to download"])
         and not any(k in q_norm for k in ["crash", "freez", "force close", "quits unexpectedly", "shut down"])
@@ -1558,9 +1500,7 @@ def is_evidence_safe(
                 )
             return False, "app_crash_vs_download_divergence"
 
-    # --------------------------------------------------------
     # iMessage vs Wi-Fi divergence
-    # --------------------------------------------------------
     if (
         ("imessage" in q_norm or "message activation" in q_norm or "imessage waiting for activation" in q_norm)
         and not any(k in q_norm for k in ["wifi", "wi-fi", "internet connection", "router"])
@@ -1580,9 +1520,7 @@ def is_evidence_safe(
                 )
             return False, "imessage_vs_wifi_divergence"
 
-    # --------------------------------------------------------
     # 11. Apple ID divergence
-    # --------------------------------------------------------
 
     if (
         "apple_id" in q_domains
@@ -1629,9 +1567,7 @@ def is_evidence_safe(
                 "account_problem_power_guidance_mismatch"
             )
 
-    # --------------------------------------------------------
     # 12. Specific Problem Match conflict
-    # --------------------------------------------------------
 
     conflict_detected, conflict_reason = detect_problem_conflict(
         query=query,
@@ -1654,9 +1590,7 @@ def is_evidence_safe(
 
         return False, conflict_reason
 
-    # --------------------------------------------------------
     # 13. Explicit conflicting domains
-    # --------------------------------------------------------
 
     for q_dom in q_domains:
 
@@ -1682,9 +1616,7 @@ def is_evidence_safe(
                     f"conflicting_domains: {q_dom} vs {r_dom}"
                 )
 
-    # --------------------------------------------------------
     # 14. General domain match
-    # --------------------------------------------------------
 
     if q_domains:
 
@@ -1739,9 +1671,7 @@ def is_evidence_safe(
                     f"response_domain_mismatch: {comp_reason}"
                 )
 
-    # --------------------------------------------------------
     # 15. Actionable guidance
-    # --------------------------------------------------------
 
     if not (
         has_action
@@ -1761,9 +1691,7 @@ def is_evidence_safe(
 
         return False, "no_actionable_guidance"
 
-    # --------------------------------------------------------
     # 16. Specific evidence safety
-    # --------------------------------------------------------
 
     spec_safe, spec_reason = is_specific_evidence_safe(
         query=query,
@@ -1796,7 +1724,6 @@ def is_evidence_safe(
         return False, spec_reason
 
     # --------------------------------------------------------
-    # ACCEPTED
     # --------------------------------------------------------
 
     if debug:
@@ -1812,9 +1739,7 @@ def is_evidence_safe(
     return True, "domain_match + actionable_guidance"
 
 
-# ============================================================
 # EVIDENCE SCORING
-# ============================================================
 
 def score_evidence_candidate(
     query: str,
@@ -2129,9 +2054,7 @@ def rerank_evidence(
     return scored
 
 
-# ============================================================
 # INTENT-AWARE SAFE CLARIFICATION
-# ============================================================
 
 INTENT_CLARIFICATION = {
 
@@ -2208,9 +2131,7 @@ def generate_safe_clarification(
     if intent in INTENT_CLARIFICATION:
         return INTENT_CLARIFICATION[intent]
 
-    # --------------------------------------------------------
     # Domain fallback
-    # --------------------------------------------------------
 
     domains = detect_domains(query)
 
@@ -2320,9 +2241,7 @@ def generate_safe_clarification(
     )
 
 
-# ============================================================
 # GROUNDED REPLY BUILDER
-# ============================================================
 
 def build_grounded_reply(
     query: str,
@@ -2330,9 +2249,7 @@ def build_grounded_reply(
     evidence: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
 
-    # --------------------------------------------------------
     # Sensitive topic
-    # --------------------------------------------------------
 
     sensitive, sensitive_reason = check_sensitive_topic(
         query
@@ -2390,9 +2307,7 @@ def build_grounded_reply(
                 None,
         }
 
-    # --------------------------------------------------------
     # Already resolved
-    # --------------------------------------------------------
 
     if is_message_resolved(query):
 
@@ -2442,9 +2357,7 @@ def build_grounded_reply(
                 None,
         }
 
-    # --------------------------------------------------------
     # No safe evidence
-    # --------------------------------------------------------
 
     if (
         not evidence
@@ -2509,7 +2422,6 @@ def build_grounded_reply(
         }
 
     # --------------------------------------------------------
-    # Extract evidence response
     # --------------------------------------------------------
 
     evidence_response = evidence.get(
@@ -2546,9 +2458,7 @@ def build_grounded_reply(
         "text"
     ].strip()
 
-    # --------------------------------------------------------
     # Evidence contains no usable guidance
-    # --------------------------------------------------------
 
     if (
         not useful_text
@@ -2601,7 +2511,6 @@ def build_grounded_reply(
         }
 
     # --------------------------------------------------------
-    # Construct response
     # --------------------------------------------------------
 
     if guidance["category"] == "clarification":
@@ -2674,9 +2583,7 @@ def build_grounded_reply(
     }
 
 
-# ============================================================
 # DETERMINISTIC GROUNDING CHECK
-# ============================================================
 
 def perform_deterministic_grounding_check(
     query: str,
@@ -2774,9 +2681,7 @@ def perform_deterministic_grounding_check(
     }
 
 
-# ============================================================
 # MAIN REPLY GENERATOR
-# ============================================================
 
 class ReplyGenerator:
     """
@@ -2826,9 +2731,7 @@ class ReplyGenerator:
 
             self.retriever = retriever
 
-    # --------------------------------------------------------
     # Intent
-    # --------------------------------------------------------
 
     def _predict_intent_internal(
         self,
@@ -2888,9 +2791,7 @@ class ReplyGenerator:
             intent
         )
 
-    # --------------------------------------------------------
     # Retrieve evidence
-    # --------------------------------------------------------
 
     def retrieve_evidence(
         self,
@@ -2953,9 +2854,7 @@ class ReplyGenerator:
             candidates
         )
 
-    # --------------------------------------------------------
     # Generate
-    # --------------------------------------------------------
 
     def generate(
         self,
@@ -2965,9 +2864,7 @@ class ReplyGenerator:
         top_k: int = 5
     ) -> Dict[str, Any]:
 
-        # ----------------------------------------------------
         # 1. Sensitive topic
-        # ----------------------------------------------------
 
         sensitive, sensitive_reason = (
             check_sensitive_topic(
@@ -3038,9 +2935,7 @@ class ReplyGenerator:
 
             return result
 
-        # ----------------------------------------------------
         # 2. Resolved acknowledgement
-        # ----------------------------------------------------
 
         if is_message_resolved(query):
 
@@ -3097,9 +2992,7 @@ class ReplyGenerator:
 
             return result
 
-        # ----------------------------------------------------
         # 3. Intent prediction
-        # ----------------------------------------------------
 
         intent_name, confidence = (
             self._predict_intent_internal(
@@ -3108,9 +3001,7 @@ class ReplyGenerator:
             )
         )
 
-        # ----------------------------------------------------
         # 4. Retrieval
-        # ----------------------------------------------------
 
         candidates = self.retrieve_evidence(
             query=query,
@@ -3119,9 +3010,7 @@ class ReplyGenerator:
             top_k=top_k
         )
 
-        # ----------------------------------------------------
         # 5. Accepted safe evidence
-        # ----------------------------------------------------
 
         accepted = [
             c
@@ -3178,9 +3067,7 @@ class ReplyGenerator:
 
             evidence = None
 
-        # ----------------------------------------------------
         # 6. Build reply
-        # ----------------------------------------------------
 
         result = build_grounded_reply(
             query,
@@ -3188,9 +3075,7 @@ class ReplyGenerator:
             evidence
         )
 
-        # ----------------------------------------------------
         # 7. Grounding verification
-        # ----------------------------------------------------
 
         grounding = (
             perform_deterministic_grounding_check(
@@ -3210,9 +3095,7 @@ class ReplyGenerator:
             ]
         )
 
-        # ----------------------------------------------------
         # 8. Grounding failure fallback
-        # ----------------------------------------------------
 
         if not result["grounded"]:
 
@@ -3255,9 +3138,7 @@ class ReplyGenerator:
                 "AUTO_HANDLE"
             )
 
-        # ----------------------------------------------------
         # 9. Metadata
-        # ----------------------------------------------------
 
         result["intent"] = (
             intent_name
@@ -3300,9 +3181,7 @@ class ReplyGenerator:
             else "AUTO_HANDLE"
         )
 
-        # ----------------------------------------------------
         # Evidence metadata
-        # ----------------------------------------------------
 
         if evidence:
 
@@ -3484,7 +3363,6 @@ class ReplyGenerator:
 
 
 # ============================================================
-# CONVENIENCE FUNCTION
 # ============================================================
 
 def generate_reply(

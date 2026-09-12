@@ -25,10 +25,7 @@ if str(PROJECT_ROOT) not in sys.path:
 # Configurable Intent Confidence Threshold
 INTENT_CONFIDENCE_THRESHOLD = 0.60
 
-
-# ============================================================
-# Transparent Domain Heuristic Checkers
-# ============================================================
+# Domain-specific heuristic detectors
 
 def is_security_case(text: str) -> Tuple[bool, str]:
     """Check for account takeover, hacking, unauthorized access, or compromise."""
@@ -163,7 +160,6 @@ def is_unclear_case(text: str) -> Tuple[bool, str]:
         return True, "empty customer message"
     lower = text.lower()
 
-    # Remove user handles and links
     cleaned = re.sub(r"@\w+", " ", lower)
     cleaned = re.sub(r"https?://\S+", " ", cleaned)
     cleaned = re.sub(r"[^\w\s]", " ", cleaned)
@@ -183,9 +179,7 @@ def is_unclear_case(text: str) -> Tuple[bool, str]:
     return False, ""
 
 
-# ============================================================
-# Main Deterministic Escalation Decision Function
-# ============================================================
+
 
 def decide_escalation(
     customer_message: str,
@@ -372,9 +366,7 @@ def decide_escalation(
     }
 
 
-# ============================================================
-# Self-Test CLI
-# ============================================================
+
 
 if __name__ == "__main__":
     print("=" * 70)

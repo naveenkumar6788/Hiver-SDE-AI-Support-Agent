@@ -1,0 +1,16 @@
+metric,value
+requested_cases,50
+processed_cases,50
+successful_judgments,24
+failed_judgments,26
+success_rate,0.48
+provider,groq
+model,openai/gpt-oss-20b
+average_correctness,1.9583
+average_groundedness,2.375
+average_relevance,2.0833
+average_completeness,1.6667
+average_tone,4.25
+average_unsupported_claims,4.0
+average_escalation_appropriateness,3.375
+average_overall_score,2.7229

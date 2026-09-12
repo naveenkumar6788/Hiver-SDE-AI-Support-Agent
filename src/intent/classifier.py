@@ -15,16 +15,12 @@ def clean_text(text):
 
     text = str(text).lower()
 
-    # Remove URLs
     text = re.sub(r"https?://\S+", " ", text)
 
-    # Remove Twitter mentions
     text = re.sub(r"@\w+", " ", text)
 
-    # Keep letters and numbers
     text = re.sub(r"[^a-z0-9\s]", " ", text)
 
-    # Normalize spaces
     text = re.sub(r"\s+", " ", text).strip()
 
     return text
@@ -60,7 +56,6 @@ class IntentClassifier:
 
         df["clean_text"] = df["text"].apply(clean_text)
 
-        # Remove empty examples
         df = df[
             (df["clean_text"].str.len() > 0) &
             (df["human_intent"].str.len() > 0)
@@ -75,7 +70,6 @@ class IntentClassifier:
             print(f"Training examples: {len(df)}")
             print(f"Number of intents: {y.nunique()}")
 
-        # TF-IDF model
         self.vectorizer = TfidfVectorizer(
             ngram_range=(1, 2),
             min_df=1,
@@ -95,9 +89,6 @@ class IntentClassifier:
         if verbose:
             print("Intent classifier ready.")
 
-    # ---------------------------------------------------------
-    # RULE-BASED INTENT DETECTION
-    # ---------------------------------------------------------
 
     def rule_based_intent(self, text):
 
@@ -106,15 +97,11 @@ class IntentClassifier:
         if not text:
             return None
 
-        # -----------------------------------------------------
         # 1. HARDWARE: Physical SIM tray / drawer (before cellular catches "sim")
-        # -----------------------------------------------------
         if re.search(r"\bsim (card )?(drawer|tray|slot)\b", text) or re.search(r"\btray won t open\b", text):
             return "device_hardware"
 
-        # -----------------------------------------------------
         # 2. APPLE ID / ICLOUD / ACCOUNT / AUTHENTICATION
-        # -----------------------------------------------------
         account_patterns = [
             r"\bicloud\b",
             r"\bapple id\b",
@@ -135,9 +122,7 @@ class IntentClassifier:
             if re.search(pattern, text):
                 return "apple_id_icloud"
 
-        # -----------------------------------------------------
         # 3. APP STORE DOWNLOADS
-        # -----------------------------------------------------
 
         app_store_patterns = [
             r"\bdownload (an )?app\b",
@@ -158,9 +143,7 @@ class IntentClassifier:
             if re.search(pattern, text):
                 return "app_store_downloads"
 
-        # -----------------------------------------------------
         # 4. AUDIO / SPEAKER
-        # -----------------------------------------------------
 
         audio_patterns = [
             r"\bspeaker\b",
@@ -178,9 +161,7 @@ class IntentClassifier:
             if re.search(pattern, text):
                 return "audio_speaker"
 
-        # -----------------------------------------------------
         # 5. BATTERY / CHARGING
-        # -----------------------------------------------------
 
         battery_patterns = [
             r"\bbattery\b",
@@ -199,9 +180,7 @@ class IntentClassifier:
             if re.search(pattern, text):
                 return "battery_charging"
 
-        # -----------------------------------------------------
         # 6. WIFI
-        # -----------------------------------------------------
 
         wifi_patterns = [
             r"\bwifi\b",
@@ -216,9 +195,7 @@ class IntentClassifier:
             if re.search(pattern, text):
                 return "wifi_connectivity"
 
-        # -----------------------------------------------------
         # 7. CELLULAR / CALLS
-        # -----------------------------------------------------
 
         calls_patterns = [
             r"\bphone calls?\b",
@@ -247,9 +224,7 @@ class IntentClassifier:
             if re.search(pattern, text):
                 return "calls_cellular"
 
-        # -----------------------------------------------------
         # 8. SCREEN / DISPLAY
-        # -----------------------------------------------------
 
         screen_patterns = [
             r"\bscreen\b",
@@ -266,9 +241,7 @@ class IntentClassifier:
             if re.search(pattern, text):
                 return "screen_display"
 
-        # -----------------------------------------------------
         # 9. APP PROBLEMS
-        # -----------------------------------------------------
 
         app_patterns = [
             r"\bapp crashes\b",
@@ -302,9 +275,7 @@ class IntentClassifier:
         if has_app_name and has_app_problem:
             return "app_problems"
 
-        # -----------------------------------------------------
         # 10. APPLE MUSIC / ITUNES
-        # -----------------------------------------------------
 
         music_patterns = [
             r"\bapple music\b",
@@ -320,9 +291,7 @@ class IntentClassifier:
             if re.search(pattern, text):
                 return "apple_music_itunes"
 
-        # -----------------------------------------------------
         # 11. DEVICE HARDWARE
-        # -----------------------------------------------------
 
         hardware_patterns = [
             r"\bcamera\b",
@@ -345,9 +314,7 @@ class IntentClassifier:
             if re.search(pattern, text):
                 return "device_hardware"
 
-        # -----------------------------------------------------
         # 12. IOS SOFTWARE UPDATE
-        # -----------------------------------------------------
 
         ios_patterns = [
             r"\bios\b",
@@ -369,9 +336,6 @@ class IntentClassifier:
 
         return None
 
-    # ---------------------------------------------------------
-    # PREDICTION
-    # ---------------------------------------------------------
 
     def predict(self, text, use_rules=True):
 
