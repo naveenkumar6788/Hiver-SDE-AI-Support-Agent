@@ -1,6 +1,6 @@
 # Hiver SDE AI Support Agent
 
-An automated customer support agent for social media inquiries, built and evaluated on historical **@AppleSupport** Twitter conversations.
+An automated customer support agent for social media inquiries, built and evaluated historical **@AppleSupport** customer-support conversations from Twitter. 
 
 The system classifies customer intent, retrieves relevant historical support cases, validates that retrieved guidance actually fits the customer's problem (rejecting mismatched actions), generates grounded replies, and escalates safety hazards, billing disputes, and account takeovers to human specialists.
 
