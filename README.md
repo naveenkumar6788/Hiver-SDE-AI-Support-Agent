@@ -143,14 +143,19 @@ An independent human rater evaluated 50 frozen system responses across 7 dimensi
 
 ## 9. How to Run
 
-### Setup Environment
+### Setup & Reproduction
+
 ```bash
-# 1. Create and activate a virtual environment
+# 1. Clone repository (use main branch)
+git clone -b main https://github.com/naveenkumar6788/Hiver-SDE-AI-Support-Agent.git
+cd Hiver-SDE-AI-Support-Agent
+
+# 2. Create and activate a virtual environment
 python -m venv venv
 .\venv\Scripts\Activate.ps1   # Windows PowerShell
 # source venv/bin/activate    # macOS / Linux
 
-# 2. Install dependencies
+# 3. Install dependencies
 pip install -r requirements.txt
 ```
 
@@ -174,6 +179,14 @@ python -m src.evaluation.evaluate_reply_generator
 # Run the human-LLM agreement analysis on valid paired cases
 python -m src.evaluation.human_agreement
 ```
+
+### Dataset & Offline Pipeline Reproduction (Optional)
+Pre-processed evaluation golden sets and benchmark summaries are committed directly in `golden_set/` and `evaluation/results/`, allowing the full test suite and evaluations to run out of the box.
+
+The large raw Twitter dataset (~500 MB) and processed dialogue threads (`data/processed/`, ~114 MB) are intentionally excluded from Git tracking to prevent repository bloat. To rebuild the historical retrieval index from raw data:
+1. Place raw `twcs.csv` into `data/raw/twcs/`.
+2. Reconstruct dialogue threads: `python -m src.data.reconstruct_conversations`.
+3. Validate and build threads: `python -m src.data.validate_conversations`.
 
 ---
 
