@@ -6,7 +6,7 @@ The system classifies customer intent, retrieves relevant historical support cas
 
 ---
 
-## 1. What is this?
+## 1. What is this
 
 This repository contains a deterministic, safety-focused customer support pipeline designed for high-volume, public customer support on Twitter/X.
 
